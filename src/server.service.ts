@@ -9,5 +9,9 @@ export class ServerService {
   getAllPatients() {
     return this.http.get('/api/getAllPatients');
   }
+
+  toggleUrls(count: Number) {
+    return this.http.post('api/toggleUrls', [count]);
+  }
 }
 

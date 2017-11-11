@@ -1,3 +1,10 @@
+<h2>List of Patients</h2>
 <div *ngFor="let patient of patientData">
-  <div>{{patient.resource.id}}</div>
+  <button mat-raised-button color="primary">{{patient.resource.id}}</button>
+  <br>
 </div>
+
+<hr>
+
+<button mat-raised-button color="primary" (click)="getPreviousPatients(count)">PREVIOUS</button>
+<button mat-raised-button color="primary" (click)="getNextSetOfData(count)">NEXT</button>

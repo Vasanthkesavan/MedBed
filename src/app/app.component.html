@@ -1,1 +1,4 @@
-<app-medical-history></app-medical-history>
+<button mat-raised-button color="primary" (click)="changeShowStatus()">VIEW MEDICAL HISTORY</button>
+<hr>
+
+<app-medical-history *ngIf="showHide"></app-medical-history>

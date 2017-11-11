@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { MedicalHistoryComponent } from './medical-history/medical-history.component';
 import {ServerService} from "../server.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatButtonModule} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     BrowserModule,
     HttpModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [ServerService],
   bootstrap: [AppComponent]
