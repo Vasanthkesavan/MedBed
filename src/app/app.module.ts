@@ -1,16 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { MedicalHistoryComponent } from './medical-history/medical-history.component';
+import {ServerService} from "../server.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MedicalHistoryComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [ServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
