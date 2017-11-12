@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {ServerService} from "../../server.service";
 
 @Component({
   selector: 'app-practioners',
@@ -11,6 +12,7 @@ export class PractionersComponent implements OnInit {
   public patientName;
   public organization;
   public doctors;
+  public path = '../../backenda.mp3';
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -25,7 +27,7 @@ export class PractionersComponent implements OnInit {
   ];
 
 
-  constructor() {
+  constructor(private serverService: ServerService) {
 
   }
 
@@ -61,4 +63,37 @@ export class PractionersComponent implements OnInit {
     console.log(e);
   }
 
+  getTheAudioFile(org: String) {
+    let toLoop = this.barChartData;
+    let author = [];
+    let initial;
+
+    for(let i = 1; i < toLoop.length; i++) {
+      initial = toLoop[0].data[0];
+      if(initial < toLoop[i].data[0]) {
+        initial = toLoop[i].label;
+
+      }
+    }
+    author.push(initial);
+
+    this.serverService.getTheAudioFile(author[0], org)
+      .subscribe(
+        (response) => {
+          //console.log(JSON.stringify(response));
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+  }
+
+  playTheAudio() {
+    let x: HTMLVideoElement = document.getElementById("myAudio")[0];
+
+    setTimeout(() => {
+      x.play();
+    }, 5000)
+
+  }
 }

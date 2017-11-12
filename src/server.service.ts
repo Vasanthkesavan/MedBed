@@ -57,5 +57,14 @@ export class ServerService {
   getAllTheProcedures(patientId: String) {
     return this.http.post('/api/getAllTheProcedures', [patientId]);
   }
+
+
+  getTheAudioFile(author: String, organization: String) {
+    return this.http.post('/api/getTheAudioFile', [author, organization])
+  }
+
+  playTheAudio() {
+    return this.http.get('/api/playTheAudio');
+  }
 }
 

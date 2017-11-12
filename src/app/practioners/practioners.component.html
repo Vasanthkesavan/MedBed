@@ -13,3 +13,14 @@
   </div>
 </div>
 <mat-card-title class="h3">Organization: {{organization}}</mat-card-title>
+
+<mat-card-title  class="h3">
+  <button mat-button color="primary" (click)="getTheAudioFile(organization)">
+    <mat-icon (click)="playTheAudio()">play_arrow</mat-icon>
+    <audio id="myAudio" controls autoplay>
+      <source src="{{path}}" type="audio/ogg">
+    </audio>
+  </button>
+</mat-card-title>
+
+

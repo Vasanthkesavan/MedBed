@@ -32,7 +32,7 @@ import { PractionersComponent } from './practioners/practioners.component';
     MatGridListModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [ServerService],
   bootstrap: [AppComponent]
