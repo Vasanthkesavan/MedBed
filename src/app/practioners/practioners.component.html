@@ -1,0 +1,15 @@
+<mat-card-title class="h3">Practioner Visualizer</mat-card-title>
+
+<div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>
+<mat-card-title class="h3">Organization: {{organization}}</mat-card-title>

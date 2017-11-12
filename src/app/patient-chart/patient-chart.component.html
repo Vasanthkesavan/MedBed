@@ -1,0 +1,9 @@
+<mat-card-title class="h3">Resource Visualizer</mat-card-title>
+<div style="display: block">
+  <canvas baseChart
+          [data]="doughnutChartDat"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+</div>

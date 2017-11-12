@@ -1,7 +1,9 @@
-<h2>List of Patients</h2>
-<div *ngFor="let patient of patientData">
-  <button mat-raised-button color="primary"
-          (click)="seeTheHistory($event.target.innerHTML);
+<div class="wrapper">
+  <div class="one">
+    <mat-card-title class="h3"> Patients List </mat-card-title>
+    <div *ngFor="let patient of patientData">
+      <mat-card mat-raised-button color="primary"
+              (click)="seeTheHistory($event.target.innerHTML);
                    seeTheCarePlan($event.target.innerHTML);
                    seeTheConditions($event.target.innerHTML);
                    seeTheCommunicationPlan($event.target.innerHTML);
@@ -11,25 +13,26 @@
                    seeTheMAdmin($event.target.innerHTML);
                    seeTheMDispense($event.target.innerHTML);
                    seeTheMRequest($event.target.innerHTML);
-                   seeTheProcedures($event.target.innerHTML)
+                   seeTheProcedures($event.target.innerHTML);
+                   changeShowStatusVisualize();
+                   seeTheObservationsWholeA($event.target.innerHTML);
+                   seeTheObservationsWholeB($event.target.innerHTML);
+                   seeTheObservationsWholeC($event.target.innerHTML);
                    "
-                   id="{{patient.resource.id}}">{{patient.resource.id}}</button>
-  <br>
+              id="{{patient.resource.id}}" >{{patient.resource.id}}</mat-card>
+
+    </div>
+    <br>
+    <button class="h3" mat-raised-button color="primary" (click)="getPreviousPatients(count)">Previous</button>
+    <button class="h3" mat-raised-button color="primary" (click)="getNextSetOfData(count)">Next</button>
+    <br>
+    <hr>
+    <button mat-raised-button color="primary" (click)="changeShowStatus()">Visualize Resource</button>
+    <button mat-raised-button color="primary" (click)="changeShowStatus1()">Visualize Practioners</button>
+  </div>
+  <div class="two">
+    <app-patient-chart *ngIf="showHide" [doughnutChartData]="doughnutChartData"></app-patient-chart>
+    <app-practioners *ngIf="showHide1" [tenDetail]="tenDetail"></app-practioners>
+  </div>
 </div>
 
-<hr>
-
-<button mat-raised-button color="primary" (click)="getPreviousPatients(count)">PREVIOUS</button>
-<button mat-raised-button color="primary" (click)="getNextSetOfData(count)">NEXT</button>
-
-<h1>This is the total number of encounters: {{encountersTotal}}</h1>
-<h1>This is the careplan: {{carePlanTotal}}</h1>
-<h1>This is the communication: {{communicationTotal}}</h1>
-<h1>This is the conditions: {{conditionsTotal}}</h1>
-<h1>This is the Diagnostic Report: {{dTotal}}</h1>
-<h1>This is the immunizations: {{iTotal}}</h1>
-<h1>This is the observations: {{oTotal}}</h1>
-<h1>This is the Medicine Administration: {{MATotal}}</h1>
-<h1>This is the Medicine Dispense : {{MDTotal}}/</h1>
-<h1>This is the Medical Request: {{MRTotal}}</h1>
-<h1>This is the procedure : {{pTotal}}</h1>

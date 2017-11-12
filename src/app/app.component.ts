@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public showHide: Boolean;
+  public showHide1: Boolean;
 
   constructor() {
     this.showHide = false;
@@ -16,4 +17,7 @@ export class AppComponent {
     this.showHide = !this.showHide;
   }
 
+  changeShowStatus1() {
+    this.showHide1 = !this.showHide1;
+  }
 }

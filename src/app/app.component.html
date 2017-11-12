@@ -1,4 +1,10 @@
-<button mat-raised-button color="primary" (click)="changeShowStatus()">VIEW MEDICAL HISTORY</button>
+<mat-toolbar color="primary">
+  <nav>
+    <span>MiHIN Fire-PIT  |</span>
+    <span class="icon" (click)="changeShowStatus()">Practioners & Medical History</span>
+    <span class="spacer"></span>
+  </nav>
+</mat-toolbar>
 <hr>
-
 <app-medical-history *ngIf="showHide"></app-medical-history>
+

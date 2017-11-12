@@ -21,8 +21,14 @@ export class MedicalHistoryComponent implements OnInit {
   public MDTotal;
   public MRTotal;
   public pTotal;
+  public doughnutChartData:number[] = [];
+  public showHide: Boolean;
+  public showStatusHide: Boolean;
+  public showHide1;
+  public tenDetail;
+  public aShow;
 
-  constructor(private serverService: ServerService) { }
+  constructor(private serverService: ServerService) { this.showHide = false; this.showStatusHide = false; this.tenDetail = [[], [], []]; this.aShow = false}
 
   ngOnInit() {
     this.serverService.getAllPatients()
@@ -36,8 +42,8 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   getPreviousPatients(count: Number) {
-    if(this.count !== 10) {
       this.count = this.count - 10;
+      console.log('this is the count', this.count);
       this.serverService.toggleUrls(count)
         .subscribe(
           (response) => {
@@ -47,7 +53,7 @@ export class MedicalHistoryComponent implements OnInit {
             console.log(error);
           }
         )
-    }
+
 
   }
 
@@ -71,9 +77,12 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllEncounters(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+          if(this.doughnutChartData.length > 0) {
+            this.doughnutChartData = [];
+          }
           this.encountersTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -85,9 +94,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllCarePlan(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+
           this.carePlanTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -99,9 +109,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllCommunicationPlan(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+
           this.communicationTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -113,9 +124,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheConditions(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+
           this.conditionsTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -127,9 +139,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheDiagnosticConditions(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+
           this.dTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -141,9 +154,10 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheImmunization(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
+
           this.iTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
+
         },
         (error) => {
           console.log(error);
@@ -155,9 +169,8 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheObservations(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
           this.oTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
         },
         (error) => {
           console.log(error);
@@ -169,9 +182,8 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheMAdmin(patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
           this.MATotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
         },
         (error) => {
           console.log(error);
@@ -184,10 +196,9 @@ export class MedicalHistoryComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('this is the response', response)
-          let result = response['total'];
 
-          this.MDTotal = JSON.stringify(result);
-          console.log(response);
+          this.MDTotal = response['total'];
+          this.doughnutChartData.push(response['total']);
         },
         (error) => {
           console.log(error);
@@ -199,9 +210,8 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheMRequest (patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
           this.MRTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
         },
         (error) => {
           console.log(error);
@@ -213,13 +223,82 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllTheProcedures (patientID)
       .subscribe(
         (response) => {
-          console.log('this is the response', response)
           this.pTotal = response['total'];
-          console.log(response);
+          this.doughnutChartData.push(response['total']);
         },
         (error) => {
           console.log(error);
         }
       )
   }
+
+  changeShowStatus() {
+    this.showHide = !this.showHide;
+  }
+
+  changeShowStatusVisualize() {
+    this.showStatusHide = !this.showStatusHide;
+  }
+
+  changeShowStatus1() {
+    this.showHide1 = !this.showHide1;
+  }
+
+  seeTheObservationsWholeA(patientID: String) {
+    this.serverService.getAllEncounters(patientID)
+      .subscribe(
+        (response) => {
+          for(var k in response['entry']) {
+            for (var a in response['entry'][k]) {
+              for (var b in response['entry'][k][a]) {
+                for (var c in response['entry'][k][a]['serviceProvider']) {
+                  this.tenDetail[2].push(response['entry'][k][a]['serviceProvider']['display']);
+                }
+              }
+            }
+          }},
+        (error) => {
+          console.log(error)
+        }
+      )
+  }
+
+  seeTheObservationsWholeB(patientID: String) {
+    this.serverService.getAllEncounters(patientID)
+      .subscribe(
+        (response) => {
+          for(var k in response['entry']) {
+            for(var a in response['entry'][k]) {
+              for(var b in response['entry'][k][a]) {
+                for(var c in response['entry'][k][a]['subject']) {
+                  this.tenDetail[0].push(response['entry'][k][a]['subject']['display'])
+                }
+              }
+            }
+          }
+        },
+        (error) => console.log(error)
+      )
+  }
+
+  seeTheObservationsWholeC(patientID: String) {
+    this.serverService.getAllEncounters(patientID)
+      .subscribe(
+        (response) => {
+          for(var k in response['entry']) {
+            for(var a in response['entry'][k]) {
+              for(var b in response['entry'][k][a]) {
+                for(var c in response['entry'][k][a]['participant']) {
+                  this.tenDetail[1].push(response['entry'][k][a]['participant'][0]['individual']['display'])
+                }
+              }
+            }
+          }
+        }
+      ),
+      (error) => {
+        console.log(error);
+      }
+  }
+
 }
