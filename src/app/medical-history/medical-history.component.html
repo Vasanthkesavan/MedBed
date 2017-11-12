@@ -1,6 +1,19 @@
 <h2>List of Patients</h2>
 <div *ngFor="let patient of patientData">
-  <button mat-raised-button color="primary">{{patient.resource.id}}</button>
+  <button mat-raised-button color="primary"
+          (click)="seeTheHistory($event.target.innerHTML);
+                   seeTheCarePlan($event.target.innerHTML);
+                   seeTheConditions($event.target.innerHTML);
+                   seeTheCommunicationPlan($event.target.innerHTML);
+                   seeTheDiagnosticConditions($event.target.innerHTML);
+                   seeTheImmunization($event.target.innerHTML);
+                   seeTheObservations($event.target.innerHTML);
+                   seeTheMAdmin($event.target.innerHTML);
+                   seeTheMDispense($event.target.innerHTML);
+                   seeTheMRequest($event.target.innerHTML);
+                   seeTheProcedures($event.target.innerHTML)
+                   "
+                   id="{{patient.resource.id}}">{{patient.resource.id}}</button>
   <br>
 </div>
 
@@ -8,3 +21,15 @@
 
 <button mat-raised-button color="primary" (click)="getPreviousPatients(count)">PREVIOUS</button>
 <button mat-raised-button color="primary" (click)="getNextSetOfData(count)">NEXT</button>
+
+<h1>This is the total number of encounters: {{encountersTotal}}</h1>
+<h1>This is the careplan: {{carePlanTotal}}</h1>
+<h1>This is the communication: {{communicationTotal}}</h1>
+<h1>This is the conditions: {{conditionsTotal}}</h1>
+<h1>This is the Diagnostic Report: {{dTotal}}</h1>
+<h1>This is the immunizations: {{iTotal}}</h1>
+<h1>This is the observations: {{oTotal}}</h1>
+<h1>This is the Medicine Administration: {{MATotal}}</h1>
+<h1>This is the Medicine Dispense : {{MDTotal}}/</h1>
+<h1>This is the Medical Request: {{MRTotal}}</h1>
+<h1>This is the procedure : {{pTotal}}</h1>
