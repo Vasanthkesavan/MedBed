@@ -1,10 +1,15 @@
 <mat-toolbar color="primary">
   <nav>
     <span>MedBed  |</span>
-    <span class="icon" (click)="changeShowStatus()">Practioners & Medical History</span>
+    <span class="icon" (click)="changeShowStatus()"
+
+    >Practioners & Medical History</span>
     <span class="spacer"></span>
   </nav>
 </mat-toolbar>
 <hr>
-<app-medical-history *ngIf="showHide"></app-medical-history>
+<app-medical-history *ngIf="showHide" [count1]="count"
+                     [urlNext1]="urlNext"
+                     [patientData1]="patientData"
+></app-medical-history>
 

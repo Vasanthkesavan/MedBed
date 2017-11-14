@@ -44,7 +44,7 @@ function getAllPatients(req, res) {
 }
 
 function toggleUrls(req, res) {
-  let count = JSON.stringify(req.body[0]);
+  //let count = JSON.stringify(req.body[0]);
   // const url =`http://34.236.185.198:8080/cqf-ruler/baseDstu3?_getpages=4799e19c-eb46-4228-89ff-74922f8a4ec5&_getpagesoffset=${count}&_count=10&_format=json&_pretty=true&_bundletype=searchset`
   const url = req.body[1];
   let data;

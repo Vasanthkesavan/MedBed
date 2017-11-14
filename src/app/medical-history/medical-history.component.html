@@ -3,36 +3,22 @@
     <mat-card-title class="h3"> Patients List </mat-card-title>
     <div *ngFor="let patient of patientData">
       <mat-card mat-raised-button color="primary"
-              (click)="seeTheHistory($event.target.innerHTML);
-                   seeTheCarePlan($event.target.innerHTML);
-                   seeTheConditions($event.target.innerHTML);
-                   seeTheCommunicationPlan($event.target.innerHTML);
-                   seeTheDiagnosticConditions($event.target.innerHTML);
-                   seeTheImmunization($event.target.innerHTML);
-                   seeTheObservations($event.target.innerHTML);
-                   seeTheMAdmin($event.target.innerHTML);
-                   seeTheMDispense($event.target.innerHTML);
-                   seeTheMRequest($event.target.innerHTML);
-                   seeTheProcedures($event.target.innerHTML);
-                   changeShowStatusVisualize();
-                   seeTheObservationsWholeA($event.target.innerHTML);
-                   seeTheObservationsWholeB($event.target.innerHTML);
-                   seeTheObservationsWholeC($event.target.innerHTML);
-                   "
-              id="{{patient.resource.id}}" >{{patient.resource.id}}</mat-card>
+              (click)="allMethodCall($event.target.innerHTML);
+                       "
+               >{{patient.resource.id}}</mat-card>
 
     </div>
     <br>
-    <button class="h3" mat-raised-button color="primary" (click)="getPreviousPatients(count, url)">Previous</button>
-    <button class="h3" mat-raised-button color="primary" (click)="getNextSetOfData(count, url)">Next</button>
+    <button class="h3" mat-raised-button color="primary" (click)="getPreviousPatients(count, urlPrevious)">Previous</button>
+    <button class="h3" mat-raised-button color="primary" (click)="getNextSetOfData(count, urlNext)">Next</button>
     <br>
     <hr>
     <button mat-raised-button color="primary" (click)="changeShowStatus()">Visualize Resource</button>
-    <button mat-raised-button color="primary" (click)="changeShowStatus1()">Visualize Practioners</button>
+    <button mat-raised-button color="primary" (click)="changeShowStatus()">Visualize Practioners</button>
   </div>
   <div class="two">
     <app-patient-chart *ngIf="showHide" [doughnutChartData]="doughnutChartData"></app-patient-chart>
-    <app-practioners *ngIf="showHide1" [tenDetail]="tenDetail"></app-practioners>
+    <app-practioners *ngIf="showHide" [tenDetail]="tenDetail"></app-practioners>
   </div>
 </div>
 

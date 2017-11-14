@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ServerService} from "../../server.service";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -27,20 +28,19 @@ export class MedicalHistoryComponent implements OnInit {
   public showHide1;
   public tenDetail;
   public aShow;
-  public url;
+  public urlPrevious;
+  public urlNext: String;
+
+  @Input() count1: Number;
+  @Input() urlNext1: String;
+  @Input() patientData1: String;
 
   constructor(private serverService: ServerService) { this.showHide = false; this.showStatusHide = false; this.tenDetail = [[], [], []]; this.aShow = false}
 
   ngOnInit() {
-    this.serverService.getAllPatients()
-      .subscribe(
-        (response) => {
-          this.patientData = response['entry'];
-          this.url = response['link'][1].url;
-          this.count = 10;
-        },
-        (error) => console.log(error)
-      )
+    this.count = this.count1;
+    this.urlNext = this.urlNext1;
+    this.patientData = this.patientData1;
   }
 
   getPreviousPatients(count: Number, url: String) {
@@ -50,8 +50,10 @@ export class MedicalHistoryComponent implements OnInit {
           (response) => {
             this.patientData = response['entry'];
             if(response['link'][2]) {
-              this.url = response['link'][2].url;
+              this.urlPrevious = response['link'][2].url;
             }
+            this.urlNext = response['link'][1].url;
+            console.log('this is the next url', this.urlNext)
           },
           (error) => {
             console.log(error);
@@ -69,8 +71,9 @@ export class MedicalHistoryComponent implements OnInit {
           (response) => {
             this.patientData = response['entry'];
             if(response['link'][1]) {
-              this.url = response['link'][1].url;
+              this.urlNext = response['link'][1].url;
             }
+            this.urlPrevious = response['link'][2].url;
           },
           (error) => {
             console.log(error);
@@ -255,15 +258,12 @@ export class MedicalHistoryComponent implements OnInit {
     this.serverService.getAllEncounters(patientID)
       .subscribe(
         (response) => {
-          for(var k in response['entry']) {
-            for (var a in response['entry'][k]) {
-              for (var b in response['entry'][k][a]) {
-                for (var c in response['entry'][k][a]['serviceProvider']) {
-                  this.tenDetail[2].push(response['entry'][k][a]['serviceProvider']['display']);
-                }
-              }
+          if(response) {
+            for(let i = 0; i < response['entry'].length; i++) {
+              this.tenDetail[2].push(response['entry'][i]['resource']['serviceProvider']['display'])
             }
-          }},
+          }
+          },
         (error) => {
           console.log(error)
         }
@@ -271,34 +271,27 @@ export class MedicalHistoryComponent implements OnInit {
   }
 
   seeTheObservationsWholeB(patientID: String) {
-    this.serverService.getAllEncounters(patientID)
+     this.serverService.getAllEncounters(patientID)
       .subscribe(
         (response) => {
-          for(var k in response['entry']) {
-            for(var a in response['entry'][k]) {
-              for(var b in response['entry'][k][a]) {
-                for(var c in response['entry'][k][a]['subject']) {
-                  this.tenDetail[0].push(response['entry'][k][a]['subject']['display'])
-                }
-              }
+          if(response) {
+            for(let i = 0; i < response['entry'].length; i++) {
+              this.tenDetail[0].push(response['entry'][i]['resource']['subject']['display'])
             }
           }
+
         },
         (error) => console.log(error)
       )
   }
 
   seeTheObservationsWholeC(patientID: String) {
-    this.serverService.getAllEncounters(patientID)
+    return this.serverService.getAllEncounters(patientID)
       .subscribe(
         (response) => {
-          for(var k in response['entry']) {
-            for(var a in response['entry'][k]) {
-              for(var b in response['entry'][k][a]) {
-                for(var c in response['entry'][k][a]['participant']) {
-                  this.tenDetail[1].push(response['entry'][k][a]['participant'][0]['individual']['display'])
-                }
-              }
+          if(response) {
+            for(let i = 0; i < response['entry'].length; i++) {
+              this.tenDetail[1].push(response['entry'][i]['resource']['participant'][0]['individual']['display'])
             }
           }
         }
@@ -308,4 +301,21 @@ export class MedicalHistoryComponent implements OnInit {
       }
   }
 
+  allMethodCall(patientID: String) {
+    this.seeTheHistory(patientID);
+    this.seeTheCarePlan(patientID);
+    this.seeTheConditions(patientID);
+    this.seeTheCommunicationPlan(patientID);
+    this.seeTheDiagnosticConditions(patientID);
+    this.seeTheImmunization(patientID);
+    this.seeTheObservations(patientID);
+    this.seeTheMAdmin(patientID);
+    this.seeTheMDispense(patientID);
+    this.seeTheMRequest(patientID);
+    this.seeTheProcedures(patientID);
+    this.changeShowStatusVisualize();
+    this.seeTheObservationsWholeA(patientID);
+    this.seeTheObservationsWholeB(patientID);
+    this.seeTheObservationsWholeC(patientID);
+  }
 }
