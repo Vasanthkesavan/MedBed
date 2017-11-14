@@ -10,8 +10,8 @@ export class ServerService {
     return this.http.get('/api/getAllPatients');
   }
 
-  toggleUrls(count: Number) {
-    return this.http.post('api/toggleUrls', [count]);
+  toggleUrls(count: Number, url: String) {
+    return this.http.post('api/toggleUrls', [count, url]);
   }
 
   getAllEncounters(patientId: String) {

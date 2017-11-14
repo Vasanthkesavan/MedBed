@@ -27,6 +27,7 @@ export class MedicalHistoryComponent implements OnInit {
   public showHide1;
   public tenDetail;
   public aShow;
+  public url;
 
   constructor(private serverService: ServerService) { this.showHide = false; this.showStatusHide = false; this.tenDetail = [[], [], []]; this.aShow = false}
 
@@ -35,19 +36,22 @@ export class MedicalHistoryComponent implements OnInit {
       .subscribe(
         (response) => {
           this.patientData = response['entry'];
+          this.url = response['link'][1].url;
           this.count = 10;
         },
         (error) => console.log(error)
       )
   }
 
-  getPreviousPatients(count: Number) {
+  getPreviousPatients(count: Number, url: String) {
       this.count = this.count - 10;
-      console.log('this is the count', this.count);
-      this.serverService.toggleUrls(count)
+      this.serverService.toggleUrls(count, url)
         .subscribe(
           (response) => {
             this.patientData = response['entry'];
+            if(response['link'][2]) {
+              this.url = response['link'][2].url;
+            }
           },
           (error) => {
             console.log(error);
@@ -57,13 +61,16 @@ export class MedicalHistoryComponent implements OnInit {
 
   }
 
-  getNextSetOfData(count: Number) {
+  getNextSetOfData(count: Number, url: String) {
     if(this.count >= 10 && this.count < 100) {
       this.count = this.count + 10;
-      this.serverService.toggleUrls(count)
+      this.serverService.toggleUrls(count, url)
         .subscribe(
           (response) => {
             this.patientData = response['entry'];
+            if(response['link'][1]) {
+              this.url = response['link'][1].url;
+            }
           },
           (error) => {
             console.log(error);

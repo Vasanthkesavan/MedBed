@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./db').mongoose;
 const app = express();
-const Polly = require('./polly.auth').polly;
+// const Polly = require('./polly.auth').polly;
 const path =require('path');
 const request = require('request');
 const fs = require('fs');
@@ -46,7 +46,7 @@ function getAllPatients(req, res) {
 function toggleUrls(req, res) {
   let count = JSON.stringify(req.body[0]);
   // const url =`http://34.236.185.198:8080/cqf-ruler/baseDstu3?_getpages=4799e19c-eb46-4228-89ff-74922f8a4ec5&_getpagesoffset=${count}&_count=10&_format=json&_pretty=true&_bundletype=searchset`
-  const url = `http://34.236.185.198:8080/cqf-ruler/baseDstu3?_getpages=68cb06ba-158f-44a0-a328-eef27a2c920b&_getpagesoffset=${count}&_count=10&_format=json&_pretty=true&_bundletype=searchset`
+  const url = req.body[1];
   let data;
   request.get(url, (error, response, body) => {
     data = JSON.parse(body);
@@ -189,36 +189,27 @@ function getAllTheProcedures(req, res) {
 }
 
 function getTheAudioFile(req, res) {
-  let doctor = req.body[0];
-  let organization = req.body[1];
-
-  let voiceDetails = {
-    "OutputFormat": "mp3",
-    "Text": `The patient has visited the doctor ${doctor} times and the doctor belongs to the ${organization} in the healthcare network`,
-    "TextType": "text",
-    "VoiceId": "Brian"
-  };
-
-  Polly.synthesizeSpeech(voiceDetails, (err, data) => {
-    if(err) console.log(err);
-    console.log(data.AudioStream)
-    fs.writeFile(__dirname + `a.mp3`, data.AudioStream, (err) => {
-      if(err) console.log('Error saving file', err);
-      //console.log(data)
-    });
-    res.send(JSON.stringify(data.AudioStream))
-  })
+  // let doctor = req.body[0];
+  // let organization = req.body[1];
+  //
+  // let voiceDetails = {
+  //   "OutputFormat": "mp3",
+  //   "Text": `The patient has visited the doctor ${doctor} times and the doctor belongs to the ${organization} in the healthcare network`,
+  //   "TextType": "text",
+  //   "VoiceId": "Brian"
+  // };
+  //
+  // Polly.synthesizeSpeech(voiceDetails, (err, data) => {
+  //   if(err) console.log(err);
+  //   console.log(data.AudioStream)
+  //   fs.writeFile(__dirname + `a.mp3`, data.AudioStream, (err) => {
+  //     if(err) console.log('Error saving file', err);
+  //
+  //   });
+  //   res.send(JSON.stringify(data.AudioStream))
+  // })
 }
 
 function playTheAudio(req, res) {
-  // let play = new Audio('./backenda.mp3');
-  // play.play();
-
-  // setTimeout(() => {
-  //   res.send('Playing');
-  // }, 10000);
-
-
   res.send('Will Play')
-
 }
